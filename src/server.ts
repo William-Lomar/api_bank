@@ -4,6 +4,8 @@ import helmet from "helmet";
 import cors from "cors";
 import { HTTP_ERRORS } from "./model";
 const consign = require("consign");
+require('dotenv').config();
+
 const AUTHORIZATION = process.env.AUTHORIZATION;
 
 const app = express();

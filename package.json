@@ -19,7 +19,8 @@
     "helmet": "^6.0.0",
     "http-errors": "^2.0.0",
     "knex": "^2.3.0",
-    "pg": "^8.8.0"
+    "pg": "^8.8.0",
+    "sqlite3": "^5.1.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
