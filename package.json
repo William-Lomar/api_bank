@@ -1,0 +1,31 @@
+{
+  "name": "api_bank",
+  "version": "1.0.0",
+  "description": "Sistema de transferencias entre contas",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "William Lomar",
+  "license": "ISC",
+  "dependencies": {
+    "apidoc": "^0.53.0",
+    "consign": "^0.1.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
+    "helmet": "^6.0.0",
+    "http-errors": "^2.0.0",
+    "knex": "^2.3.0",
+    "pg": "^8.8.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.14",
+    "@types/http-errors": "^1.8.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.8.4"
+  }
+}
