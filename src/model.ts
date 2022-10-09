@@ -14,7 +14,7 @@ export enum TipoTransacao{
 
 export interface UsuarioModel{
   id_usuario?:number,
-  login:string,
+  cpf:string,
   senha:string,
   email:string,
 }
@@ -23,7 +23,8 @@ export interface ContaModel{
   id_conta?:number,
   id_usuario:number,
   nome:string,
-  saldo:number
+  saldo:number,
+  document:string
 }
 
 export interface TransacaoModel{
@@ -33,7 +34,3 @@ export interface TransacaoModel{
   valor:number
 }
 
-export interface RespostaFunctions{
-  sucesso:boolean,
-  mensagem:any
-}
