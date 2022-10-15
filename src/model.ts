@@ -34,7 +34,7 @@ export interface TransacaoModel{
   id_conta:number,
   id_tipo:TipoTransacao,
   valor:number,
-  id_conta_destino:number,
+  id_conta_destino_origem:number, //Id da conta de destino se o tipo de transação for de envio ou id da conta de origem se a transação for de receber
   saldo_inicial:number,
   saldo_final:number,
   data:Date

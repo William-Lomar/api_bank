@@ -115,34 +115,41 @@ export class Transacao {
         .select("*")
         .where("id_conta", transacao.id_conta)
         .then((contas) => {
-          let conta = contas[0];
+          let conta: ContaModel = contas[0];
 
-          //ToDo: Verificar se é possivel realizar a transação de acordo com o valor do saldo
-          transacao.saldo_inicial = conta.saldo;
+          //Verifico se a conta possui saldo o suficiente para realizar o saque
+          if (transacao.valor > conta.saldo) {
+            reject(
+              "Você não possui saldo o suficiente para realizar esta operação"
+            );
+          } else {
+            //ToDo: Verificar se é possivel realizar a transação de acordo com o valor do saldo
+            transacao.saldo_inicial = conta.saldo;
 
-          conta.saldo = Number(conta.saldo) - transacao.valor;
+            conta.saldo = Number(conta.saldo) - transacao.valor;
 
-          transacao.saldo_final = conta.saldo;
+            transacao.saldo_final = conta.saldo;
 
-          trx("contas")
-            .update(conta)
-            .where("id_conta", conta.id_conta)
-            .then(() => {
-              trx("transacoes")
-                .insert(transacao)
-                .then(() => {
-                  trx.commit();
-                  resolve(true);
-                })
-                .catch((erro) => {
-                  trx.rollback();
-                  reject(erro);
-                });
-            })
-            .catch((erro) => {
-              trx.rollback();
-              reject(erro);
-            });
+            trx("contas")
+              .update(conta)
+              .where("id_conta", conta.id_conta)
+              .then(() => {
+                trx("transacoes")
+                  .insert(transacao)
+                  .then(() => {
+                    trx.commit();
+                    resolve(true);
+                  })
+                  .catch((erro) => {
+                    trx.rollback();
+                    reject(erro);
+                  });
+              })
+              .catch((erro) => {
+                trx.rollback();
+                reject(erro);
+              });
+          }
         })
         .catch((erro) => {
           trx.rollback();
@@ -157,7 +164,7 @@ export class Transacao {
       let promises: Array<any> = [];
 
       trx("contas")
-        .whereIn("id_conta", [transacao.id_conta, transacao.id_conta_destino])
+        .whereIn("id_conta", [transacao.id_conta, transacao.id_conta_destino_origem])
         .then((contas) => {
           //Recupero os dados atuais da conta
           let contaOrigem: ContaModel = contas.find((conta) => {
@@ -165,59 +172,65 @@ export class Transacao {
           });
 
           let contaDestino: ContaModel = contas.find((conta) => {
-            return transacao.id_conta_destino == conta.id_conta;
+            return transacao.id_conta_destino_origem == conta.id_conta;
           });
 
-          //Crio o registro historico de transação para cada conta
-          let transacaoOrigem = {
-            id_conta: contaOrigem.id_conta,
-            id_tipo: TipoTransacao.TRANSFERENCIA_ENVIAR,
-            valor: transacao.valor,
-            id_conta_destino_origem: contaDestino.id_conta,
-            saldo_inicial: Number(contaOrigem.saldo),
-            saldo_final: Number(contaOrigem.saldo) - transacao.valor,
-            data: moment().utc().toDate(),
-          };
+          if (transacao.valor > contaOrigem.saldo) {
+            reject(
+              "Você não possui saldo o suficiente para realizar esta operação"
+            )
+          } else {
+            //Crio o registro historico de transação para cada conta
+            let transacaoOrigem = {
+              id_conta: contaOrigem.id_conta,
+              id_tipo: TipoTransacao.TRANSFERENCIA_ENVIAR,
+              valor: transacao.valor,
+              id_conta_destino_origem: contaDestino.id_conta,
+              saldo_inicial: Number(contaOrigem.saldo),
+              saldo_final: Number(contaOrigem.saldo) - transacao.valor,
+              data: moment().utc().toDate(),
+            };
 
-          let transacaoDestino = {
-            id_conta: contaDestino.id_conta,
-            id_tipo: TipoTransacao.TRANSFERENCIA_RECEBER,
-            valor: transacao.valor,
-            id_conta_destino_origem: contaOrigem.id_conta,
-            saldo_inicial:Number(contaDestino.saldo),
-            saldo_final: Number(contaDestino.saldo) + transacao.valor,
-            data: moment().utc().toDate(),
-          };
+            let transacaoDestino = {
+              id_conta: contaDestino.id_conta,
+              id_tipo: TipoTransacao.TRANSFERENCIA_RECEBER,
+              valor: transacao.valor,
+              id_conta_destino_origem: contaOrigem.id_conta,
+              saldo_inicial: Number(contaDestino.saldo),
+              saldo_final: Number(contaDestino.saldo) + transacao.valor,
+              data: moment().utc().toDate(),
+            };
 
-          //Atualizo o saldo das contas
-          contaOrigem.saldo = Number(contaOrigem.saldo) - transacao.valor;
-          contaDestino.saldo = Number(contaDestino.saldo) + transacao.valor;
+            //Atualizo o saldo das contas
+            contaOrigem.saldo = Number(contaOrigem.saldo) - transacao.valor;
+            contaDestino.saldo = Number(contaDestino.saldo) + transacao.valor;
 
-          //Criar as funções de inserção e update e armazeno em um array de promises
-          promises.push(
-            trx("contas")
-              .update(contaOrigem)
-              .where("id_conta", contaOrigem.id_conta)
-          );
-          promises.push(
-            trx("contas")
-              .update(contaDestino)
-              .where("id_conta", contaDestino.id_conta)
-          );
+            //Criar as funções de inserção e update e armazeno em um array de promises
+            promises.push(
+              trx("contas")
+                .update(contaOrigem)
+                .where("id_conta", contaOrigem.id_conta)
+            );
+            promises.push(
+              trx("contas")
+                .update(contaDestino)
+                .where("id_conta", contaDestino.id_conta)
+            );
 
-          promises.push(trx("transacoes").insert(transacaoOrigem));
+            promises.push(trx("transacoes").insert(transacaoOrigem));
 
-          promises.push(trx("transacoes").insert(transacaoDestino));
+            promises.push(trx("transacoes").insert(transacaoDestino));
 
-          Promise.all(promises)
-            .then(() => {
-              trx.commit();
-              resolve(true);
-            })
-            .catch((erro) => {
-              trx.rollback();
-              reject(erro);
-            });
+            Promise.all(promises)
+              .then(() => {
+                trx.commit();
+                resolve(true);
+              })
+              .catch((erro) => {
+                trx.rollback();
+                reject(erro);
+              });
+          }
         })
         .catch((erro) => {
           trx.rollback();
