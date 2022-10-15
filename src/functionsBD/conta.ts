@@ -25,6 +25,7 @@ export class Conta{
         })
     }
 
+    //ToDo: Excluir registros de transacoes da conta excluida
     public static excluirConta(id_conta:number):Promise<boolean>{
         return new Promise((resolve,reject)=>{
             knex('contas').del().where('id_conta',id_conta).then(()=>{

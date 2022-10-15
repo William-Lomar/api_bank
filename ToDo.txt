@@ -1,4 +1,6 @@
+Validar Dados
 tratar os erros do banco 
-criar funções de transação
-Criar registro de transação
-Criar log da API
+Tratar erros api
+Criar log da API - Winston 
+apidoc
+criar websocket para enviar notificações de transações

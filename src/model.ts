@@ -7,9 +7,11 @@ export enum HTTP_ERRORS {
 }
 
 export enum TipoTransacao{
-  DEPOSITO = 0,
-  SAQUE = 1,
-  TRANSFERENCIA = 2
+  DEPOSITO = 1,
+  SAQUE = 2,
+  TRANSFERENCIA_ENVIAR = 3,
+  CRIAR_CONTA = 4,
+  TRANSFERENCIA_RECEBER = 5,
 }
 
 export interface UsuarioModel{
@@ -31,6 +33,10 @@ export interface TransacaoModel{
   id_transacao?:number,
   id_conta:number,
   id_tipo:TipoTransacao,
-  valor:number
+  valor:number,
+  id_conta_destino:number,
+  saldo_inicial:number,
+  saldo_final:number,
+  data:Date
 }
 
