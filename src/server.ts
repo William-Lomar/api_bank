@@ -40,3 +40,5 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
 app.listen(Number(process.env.PORT),()=>{
     console.log(`Servidor rodando na porta ${process.env.PORT}`);
 })
+
+
