@@ -1,6 +1,4 @@
-Validar Dados
 tratar os erros do banco 
-Tratar erros api
 Criar log da API - Winston 
 apidoc
 criar websocket para enviar notificações de transações

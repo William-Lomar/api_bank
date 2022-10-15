@@ -37,8 +37,35 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   res.json({ message: error.message });
 });
 
-app.listen(Number(process.env.PORT),()=>{
+const server = app.listen(Number(process.env.PORT),()=>{
     console.log(`Servidor rodando na porta ${process.env.PORT}`);
 })
 
+process.on('SIGTERM', signal => {
+  console.log(`Process ${process.pid} received a SIGTERM signal`)
+  server.close(()=>{
+    process.exit(1)
+  });
+})
 
+process.on('SIGINT', signal => {
+  console.log(`Process ${process.pid} has been interrupted`)
+  server.close(()=>{
+    process.exit(1)
+  });
+})
+
+process.on('uncaughtException', err => {
+  console.log(`Uncaught Exception: ${err.message}`)
+  server.close(()=>{
+    process.exit(1)
+  });
+  
+})
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.log('Unhandled rejection at ', promise, `reason: ${reason}`)
+  server.close(()=>{
+    process.exit(1)
+  });
+})
