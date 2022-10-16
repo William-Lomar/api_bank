@@ -1,4 +1,4 @@
 tratar os erros do banco 
-Criar log da API - Winston 
+Log express morgan
 apidoc
 criar websocket para enviar notificações de transações

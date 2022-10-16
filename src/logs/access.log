@@ -1,0 +1,5 @@
+::1 - - [16/Oct/2022:17:20:56 +0000] "GET /info HTTP/1.1" 200 31 "-" "PostmanRuntime/7.29.2"
+::1 - - [16/Oct/2022:17:21:41 +0000] "GET /private/conta HTTP/1.1" 200 471 "-" "PostmanRuntime/7.29.2"
+::1 - - [16/Oct/2022:17:22:07 +0000] "GET /private/conta HTTP/1.1" 401 53 "-" "PostmanRuntime/7.29.2"
+::1 - - [16/Oct/2022:17:22:37 +0000] "GET /private/conta HTTP/1.1" 200 471 "-" "PostmanRuntime/7.29.2"
+{"level":"info","message":"Servidor rodando na porta 3000","timestamp":"2022-10-16T17:23:31.315Z"}

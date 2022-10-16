@@ -4,6 +4,9 @@ import createError from "http-errors";
 import helmet from "helmet";
 import cors from "cors";
 import { HTTP_ERRORS } from "./model";
+import fs from 'fs';
+import path from 'path';
+import morgan from 'morgan'; 
 const consign = require("consign");
 require('dotenv').config();
 
@@ -45,6 +48,13 @@ app.use(helmet());
 app.use(cors());
 app.use(json());
 
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs/access.log'), { flags: 'a' });
+
+//Logs do morgan para logar acesso ás rotas
+// setup the logger
+app.use(morgan('combined', { stream: accessLogStream }))
+
+
 app.use("/private/*", (req: Request, res: Response, next: NextFunction) => {
   let authorization = req.header("authorization");
   if (authorization == AUTHORIZATION) {
@@ -71,7 +81,6 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
 const server = app.listen(Number(process.env.PORT),()=>{
   logger.info(`Servidor rodando na porta ${process.env.PORT}`)
 })
-
 
 
 
