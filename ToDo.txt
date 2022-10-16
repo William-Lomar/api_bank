@@ -1,4 +1,3 @@
 tratar os erros do banco 
-Log express morgan
 apidoc
 criar websocket para enviar notificações de transações

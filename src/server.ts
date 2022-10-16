@@ -69,7 +69,7 @@ app.use("/private/*", (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-consign({ cwd: "src" }).include("routers").into(app);
+consign({ cwd: __dirname }).include("routers").into(app);
 
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   // Seta o HTTP Status Code
