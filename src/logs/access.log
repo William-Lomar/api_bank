@@ -3,3 +3,8 @@
 ::1 - - [16/Oct/2022:17:22:07 +0000] "GET /private/conta HTTP/1.1" 401 53 "-" "PostmanRuntime/7.29.2"
 ::1 - - [16/Oct/2022:17:22:37 +0000] "GET /private/conta HTTP/1.1" 200 471 "-" "PostmanRuntime/7.29.2"
 {"level":"info","message":"Servidor rodando na porta 3000","timestamp":"2022-10-16T17:23:31.315Z"}
+::ffff:127.0.0.1 - - [17/Oct/2022:01:13:04 +0000] "GET / HTTP/1.1" 404 139 "-" "-"
+::1 - - [17/Oct/2022:01:13:57 +0000] "GET / HTTP/1.1" 404 139 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
+::1 - - [17/Oct/2022:01:14:06 +0000] "GET / HTTP/1.1" 404 139 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
+::1 - - [17/Oct/2022:01:14:08 +0000] "GET / HTTP/1.1" 404 139 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
+::1 - - [17/Oct/2022:01:14:09 +0000] "GET / HTTP/1.1" 404 139 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"

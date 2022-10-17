@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
     "build": "tsc",
-    "apidoc":"apidoc -i ./src/routers -o public/apidoc",
+    "apidoc": "apidoc -i ./src/routers -o public/apidoc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "William Lomar",
@@ -26,13 +26,15 @@
     "morgan": "^1.10.0",
     "pg": "^8.8.0",
     "sqlite3": "^5.1.2",
-    "winston": "^3.8.2"
+    "winston": "^3.8.2",
+    "ws": "^8.9.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.14",
     "@types/http-errors": "^1.8.2",
     "@types/morgan": "^1.9.3",
+    "@types/ws": "^8.5.3",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.8.4"
   }

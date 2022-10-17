@@ -7,6 +7,7 @@ import { HTTP_ERRORS } from "./model";
 import fs from 'fs';
 import path from 'path';
 import morgan from 'morgan'; 
+import { createWebSocket } from './websocket';
 const consign = require("consign");
 require('dotenv').config();
 
@@ -82,5 +83,6 @@ const server = app.listen(Number(process.env.PORT),()=>{
   logger.info(`Servidor rodando na porta ${process.env.PORT}`)
 })
 
+createWebSocket(server);
 
 
