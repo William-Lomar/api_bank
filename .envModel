@@ -1,0 +1,6 @@
+PORT = Porta do server
+AUTHORIZATION = chave de autorização 
+HOST_BD = host do banco de dados
+PORT_BD = porta do banco de dados
+USER_BD = usuario do banco de dados
+PASSWORD_BD = senha do banco de dados

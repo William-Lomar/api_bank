@@ -13,20 +13,11 @@ export function createWebSocket(server:any) {
       let id = new URL('ws://localhost:3000'+req.url).searchParams.get('id');
       if(id) clients.set(id,ws)
 
-      console.log("Novo usuario conectado com id: ",id);
-      
+      logger.info(`Novo usuario conectado com id: ${id}`)
     }
-
-    ws.on("message", (data) => {
-        
-    ws.send("Teste de recepção");
-    });
   });
 
   wss.on('listening',()=>{
     logger.info(`Websocket rodando na porta ${process.env.PORT}`);
   })
-
-
-
 }

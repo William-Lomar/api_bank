@@ -1,3 +1,4 @@
 tratar os erros do banco 
 apidoc
-criar websocket para enviar notificações de transações
+Mapear clientes conectados e limpar os inativos/broken
+testes automatiazdos
