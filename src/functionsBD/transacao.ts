@@ -1,3 +1,4 @@
+import { clients } from './../websocket';
 import { ContaModel } from "./../model";
 import { knex } from "../conexaoBanco";
 import { TipoTransacao, TransacaoModel } from "../model";
@@ -224,6 +225,13 @@ export class Transacao {
             Promise.all(promises)
               .then(() => {
                 trx.commit();
+
+                let clientDestino = clients.get(String(contaDestino.id_usuario));
+
+                if(clientDestino){
+                  clientDestino.send("Você recebeu uma transação");
+                }
+
                 resolve(true);
               })
               .catch((erro) => {
