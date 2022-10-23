@@ -1,4 +1,0 @@
-tratar os erros do banco 
-apidoc
-Mapear clientes conectados e limpar os inativos/broken
-testes automatiazdos
