@@ -1,0 +1,2 @@
+API desenvolvida em NodeJs com utilização de banco de dados Postgresql com servidor express e websocket.
+O objetivo da API é criar um sistema de cadastro usuários e contas, sendo posteriormente possível realizar transações de valores entre as contas assim como manter um registro de cada transação, além de gerenciar o saldo de cada conta cadastrada.  
