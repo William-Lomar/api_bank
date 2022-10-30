@@ -1,5 +1,5 @@
-import { ErrosBDModel } from "../src/model";
-import { tratarErro } from "../src/utils/error";
+import { ErrosBDModel } from "../../src/model";
+import { tratarErro } from "../../src/utils/error";
 
 describe("Testando tratamento de erro",()=>{
     it('Erro código UNIQUE_VIOLATION',()=>{
