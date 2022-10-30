@@ -4,6 +4,7 @@ import createError from "http-errors";
 import { Usuario } from "./../../functionsBD/usuario";
 import { Application, NextFunction, Request, Response } from "express";
 import { validaCPF } from "../../utils/cpf";
+import { tratarErro } from "../../utils/error";
 
 export = (app: Application) => {
   app.post(
@@ -24,8 +25,7 @@ export = (app: Application) => {
             res.json({ message: "Usuario cadastrado com sucesso" });
           })
           .catch((erro) => {
-            console.log(erro);
-            next(createError(HTTP_ERRORS.ERRO_BANCO, erro));
+            next(createError(HTTP_ERRORS.ERRO_BANCO, tratarErro(erro)));
           });
         }else{
           next(

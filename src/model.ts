@@ -41,3 +41,7 @@ export interface TransacaoModel{
   data:Date
 }
 
+export enum ErrosBDModel{
+  UNIQUE_VIOLATION = 23505
+}
+
